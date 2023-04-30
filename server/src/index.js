@@ -7,7 +7,6 @@ const blogRouter = require('./routes/blogRoute');
 
 const app = express();
 
-
 const port = dev.app.serverPort;
 app.listen(port, async () => {
     console.log(`server is running at http://localhost:${port}`);
