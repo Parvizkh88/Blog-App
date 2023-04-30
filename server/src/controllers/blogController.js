@@ -1,56 +1,37 @@
+const { successHandler } = require("./requestHandler");
 
 
 const getAllBlogs = async (req, res, next) => {
     try {
-        res.status(200).json({
-            success: true,
-            message: 'return all the blogs',
-            data: []
-        })
+        return successHandler(res, 200, 'return all the blogs', []);
     } catch (error) {
         next(error)
     }
 };
 const getSingleBlog = async (req, res, next) => {
     try {
-        res.status(200).json({
-            success: true,
-            message: 'return the single blog',
-            data: []
-        })
+        return successHandler(res, 200, 'return the single blog', []);
     } catch (error) {
         next(error)
     }
 };
 const createBlog = async (req, res, next) => {
     try {
-        res.status(201).json({
-            success: true,
-            message: 'blog was created successfully',
-            data: []
-        })
+        return successHandler(res, 200, 'blog was created successfully', []);
     } catch (error) {
         next(error)
     }
 };
 const deleteBlog = async (req, res, next) => {
     try {
-        res.status(200).json({
-            success: true,
-            message: 'blog was deleted successfully',
-            data: []
-        })
+        return successHandler(res, 200, 'blog was deleted successfully', []);
     } catch (error) {
         next(error)
     }
 };
 const updateBlog = async (req, res, next) => {
     try {
-        res.status(200).json({
-            success: true,
-            message: 'blog was updated successfully',
-            data: []
-        })
+        return successHandler(res, 200, 'blog was updated successfully', []);
     } catch (error) {
         next(error)
     }
