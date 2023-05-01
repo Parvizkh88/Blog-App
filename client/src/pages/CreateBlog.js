@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { createBlogRequest } from '../services/BlogService';
 
 const CreateBlog = () => {
     const [title, setTitle] = useState('');
@@ -30,14 +31,14 @@ const CreateBlog = () => {
             // }
 
             // How to make a request to backend from frontend 
-            const response = await axios.post('http://127.0.0.1:8080/api/blogs', newBlog)
-            toast(response.data.message);
+            const response = await createBlogRequest(newBlog)
+            console.log(response);
+            toast(response.message);
 
             setTitle('');
             setDescription('');
             setImage('');
         } catch (error) {
-            console.log(error.response.data.error.message);
             toast(error.response.data.error.message);
         }
     }
