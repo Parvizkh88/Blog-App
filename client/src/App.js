@@ -1,9 +1,8 @@
 import React from 'react'
+import Index from './routes'
 
 const App = () => {
-  return (
-    <div>App</div>
-  )
+  return <Index />
 }
 
 export default App
