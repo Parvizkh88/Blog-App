@@ -51,7 +51,7 @@ const createBlog = async (req, res, next) => {
             // create unique text with slugify
             slug: slugify(title),
             description: description,
-            image: image.path
+            image: req.file.path
         });
         // we are storing the data in database here:
         const blogData = await newBlog.save();

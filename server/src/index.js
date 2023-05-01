@@ -28,6 +28,8 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use('/public', express.static('public'));
+
 app.use('/api/blogs', blogRouter)
 // client error
 app.use((req, res, next) => {
