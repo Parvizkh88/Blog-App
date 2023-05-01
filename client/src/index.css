@@ -28,3 +28,7 @@ code {
   color: orange;
   text-decoration: underline;
 }
+.blog-img {
+  width: 10rem;
+  height: 12rem;
+}

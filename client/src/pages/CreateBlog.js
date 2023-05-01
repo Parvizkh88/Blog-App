@@ -46,6 +46,12 @@ const CreateBlog = () => {
     return (
         <div>
             <h1>Create Blog</h1>
+            {/* photo preview and get photo */}
+            {image && (
+                <div>
+                    <img className='blog-img' src={URL.createObjectURL(image)} alt="blog" />
+                </div>
+            )}
             <form onSubmit={handleSubmit}>
                 <div className="form-control">
                     <label htmlFor="title">Title</label>
