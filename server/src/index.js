@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const createError = require('http-errors');
@@ -18,6 +19,11 @@ app.get('/test-api', (req, res) => {
     res.send('api is working fine');
 });
 
+app.use(cors({
+    // from this place I will make the request
+    origin: ['http://127.0.0.1:3000', 'http://localhost:3000'],
+    credentials: true// when user make http only cookie request we want to access the cookie
+}));
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
