@@ -16,7 +16,7 @@ blogRouter.route('/:id')
 
 // wildcard route
 blogRouter.use('*', (req, res, next) => {
-    resizeBy.send('route not found')
+    res.send('route not found')
 })
 
 module.exports = blogRouter;
