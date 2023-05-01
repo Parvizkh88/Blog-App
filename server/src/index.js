@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const bodyParser = require('body-parser');
 const createError = require('http-errors');
 const dev = require('./config');
 const connectDB = require('./config/db');
@@ -18,6 +19,8 @@ app.get('/test-api', (req, res) => {
 });
 
 app.use(morgan('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api/blogs', blogRouter)
 // client error

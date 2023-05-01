@@ -6,6 +6,11 @@ const blogSchema = new Schema({
         type: String,
         trim: true,
         unique: true,
+        minlength: 3
+    },
+    slug: {
+        required: true,
+        type: String,
     },
     description: {
         required: true,
@@ -16,10 +21,6 @@ const blogSchema = new Schema({
         required: true,
         type: String,
         trim: true,
-    },
-    slug: {
-        required: true,
-        type: String,
     },
 },
     { timestamps: true }

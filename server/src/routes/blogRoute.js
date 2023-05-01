@@ -1,8 +1,22 @@
 const express = require('express');
-const { getAllBlogs } = require('../controllers/blogController');
+const { getAllBlogs, createBlog, updateBlog, deleteBlog, getSingleBlog } = require('../controllers/blogController');
+const upload = require('../middleware/fileUpload');
 
 const blogRouter = express.Router();
 
-blogRouter.get('', getAllBlogs);
+blogRouter.route('/')
+    .get(getAllBlogs)
+    .post(upload.single('image'), createBlog);
+
+
+blogRouter.route('/:id')
+    .get(getSingleBlog)
+    .put(updateBlog)
+    .delete(deleteBlog);
+
+// wildcard route
+blogRouter.use('*', (req, res, next) => {
+    resizeBy.send('route not found')
+})
 
 module.exports = blogRouter;
