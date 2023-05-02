@@ -1,10 +1,10 @@
-const { registerUser } = require('../controllers/userController');
+const { registerUser, verifyEmail } = require('../controllers/userController');
 const upload = require('../middleware/fileUpload');
 
 const userRouter = require('express').Router();
 
 userRouter.post('/register', upload.single('image'), registerUser);
-// userRouter.post('/verify-email', verifyEmail);
+userRouter.post('/activate', verifyEmail);
 // userRouter.post('/login', isLoggedOut, loginUser);
 // userRouter.get('/logout', isLoggedIn, logoutUser);
 // userRouter

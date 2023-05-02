@@ -67,6 +67,50 @@ const registerUser = async (req, res, next) => {
     };
 };
 
+const verifyEmail = async (req, res, next) => {
+    try {
+        // reveiving token in backend from frontend or email after verification
+        // step 1 : get token from authorization header
+        const token = req.body.token;
+        // second way to get token but destructured:
+        // const { token } = req.body;
+
+        // step 2 : check token exists in request body 
+        if (!token) {
+            return res.status(404).json({
+                message: 'token is missing',
+            });
+        }
+        // step 3: verify token and decode data
+        const decoded = jwt.verify(token, String(dev.app.jwtActivationSecretKey));
+
+        // step 4: check if email is already registered
+        const existingUser = await User.findOne({ email: decoded.email });
+        if (existingUser)
+            return res.status(409).send({
+                success: false,
+                error: 'This account is already activated',
+            });
+
+        // step 5: create the user  - when we verify the user everything is inside decode
+        const newUser = new User({ ...decoded })
+        // console.log(newUser);
+        // create the user with image
+
+        // step 6: save the user in the database
+        const user = await newUser.save();
+
+        // step 7: send the response
+        if (!user) throw createError(400, 'user was not created');
+
+        return successHandler(res, 201,
+            'user was created successfully! Please signin');
+
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
-    registerUser
+    registerUser, verifyEmail
 }
