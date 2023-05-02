@@ -2,7 +2,10 @@ require('dotenv').config();
 
 const dev = {
     app: {
-        serverPort: process.env.SERVER_PORT || 8080
+        serverPort: process.env.SERVER_PORT || 8080,
+        jwtActivationSecretKey: process.env.JWT_ACTIVATION_SECRET_KEY,
+        smtpUsername: process.env.SMTP_USERNAME,
+        smtpPassword: process.env.SMTP_PASSWORD,
     },
     db: {
         mongodbUrl: process.env.MONGODB_URL || '',
