@@ -7,6 +7,9 @@ import Navbar from '../layout/Navbar';
 import Blogs from '../pages/Blogs';
 import CreateBlog from '../pages/CreateBlog';
 import Home from '../pages/Home';
+import Register from '../pages/Register';
+import Login from '../pages/Login';
+import Activate from '../pages/Activate';
 
 const Index = () => {
     return (
@@ -17,6 +20,9 @@ const Index = () => {
                 <Route path='/' element={<Home />} />
                 <Route path='/blogs' element={<Blogs />} />
                 <Route path='/create-blog' element={<CreateBlog />} />
+                <Route path='/register' element={<Register />} />
+                <Route path='/login' element={<Login />} />
+                {/* <Route path='/activate' element={<Activate />} /> */}
             </Routes>
         </BrowserRouter>
     )

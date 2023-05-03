@@ -50,7 +50,7 @@ const registerUser = async (req, res, next) => {
             subject: "Account Activation Email",
             html: `
             <h2>Hello ${name}! </h2>
-            <p>Please click here to <a href="${dev.app.clientUrl}/api/users/activate?token=${token}" target="_blank">activate your account</a> </p>
+            <p>Please click here to <a href="${dev.app.clientUrl}/api/users/activate/${token}" target="_blank">activate your account</a> </p>
             `,
         };
         // step 6: send verification email
