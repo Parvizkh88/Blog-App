@@ -7,6 +7,7 @@ const dev = {
         smtpUsername: process.env.SMTP_USERNAME,
         smtpPassword: process.env.SMTP_PASSWORD,
         clientUrl: process.env.CLIENT_URL,
+        jtwAuthorizationSecretKey: process.env.JWT_AUTHORIZATION_SECRET_KEY,
     },
     db: {
         mongodbUrl: process.env.MONGODB_URL || '',

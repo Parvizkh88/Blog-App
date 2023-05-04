@@ -113,6 +113,77 @@ const verifyEmail = async (req, res, next) => {
     }
 };
 
+const loginUser = async (req, res, next) => {
+    try {
+        const { email, password } = req.body;
+        if (!email || !password) {
+            throw createError(404, 'email or password not found ')
+        };
+
+        if (password.length < 6) {
+            throw createError(400, 'minimum length for password is 6');
+        }
+
+        const user = await User.findOne({ email })
+        if (!user) {
+            throw createError(404, 'user with this email does not exist. Please register first')
+        }
+
+        const isPasswordMatched = await bcrypt.compare(password, user.password)
+        // console.log(user.password);
+        // console.log(password);
+
+        if (!isPasswordMatched) {
+            throw createError(400, 'email/password did not match');
+        }
+        // with status code of 400 it works better
+        if (user.isBanned) {
+            throw createError(204, 'You are banned. Please contact the authority');
+        }
+
+        // token base authentication
+        // generate JWT access token
+        // we store the id in the token: {id:user._id}
+        const token = jwt.sign({ _id: user._id },
+            // secret key
+            String(dev.app.jtwAuthorizationSecretKey), {
+            expiresIn: '15m'
+        });
+
+        // reset the cookie if there is a cookie with the same id
+        if (req.cookies[`${user._id}`]) {
+            req.cookies[`${user._id}`] = ''
+        }
+
+        // send the token inside a response cookie
+        // name of the cookie: String(user._id)
+        // token is the thing you want to store in the cookie:token
+        // path name I want to use when I am creating the cookie
+        res.cookie(String(user._id), token, {
+            path: '/',
+            // cookie must have shorter expiretime than token
+            expires: new Date(Date.now() + 1000 * 60 * 10),
+            httpOnly: true, // send the jwt token inside http only cookie
+            secure: true,
+            // sameSite: 'none'
+        })
+
+        const userData = {
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            phone: user.phone,
+            image: user.image,
+        }
+        return successHandler(res, 200, 'user was signed in', {
+            user: userData,
+            // I send the token here
+            token,
+        });
+    } catch (error) {
+        next(error)
+    }
+};
 module.exports = {
-    registerUser, verifyEmail
+    registerUser, verifyEmail, loginUser
 }
