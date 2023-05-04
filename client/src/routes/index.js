@@ -22,7 +22,7 @@ const Index = () => {
                 <Route path='/create-blog' element={<CreateBlog />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/login' element={<Login />} />
-                {/* <Route path='/activate' element={<Activate />} /> */}
+                <Route path='/api/users/activate/:token' element={<Activate />} />
             </Routes>
         </BrowserRouter>
     )

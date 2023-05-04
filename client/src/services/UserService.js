@@ -11,3 +11,9 @@ export const registerUser = async (newUser) => {
     const response = await axios.post(`${baseURL}/api/users/register`, newUser)
     return response.data;
 }
+// we need to get the token inside post method before calling the activateUser function
+export const activateUser = async (token) => {
+    // How to make a request to backend from frontend 
+    const response = await axios.post(`${baseURL}/api/users/activate`, token)
+    return response.data;
+}

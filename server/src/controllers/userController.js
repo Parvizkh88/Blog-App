@@ -75,6 +75,8 @@ const verifyEmail = async (req, res, next) => {
         // second way to get token but destructured:
         // const { token } = req.body;
 
+        // check if we get token in backend coming from frontend
+        console.log('verify email: ', token);
         // step 2 : check token exists in request body 
         if (!token) {
             return res.status(404).json({
