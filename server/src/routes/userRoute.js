@@ -1,4 +1,5 @@
-const { registerUser, verifyEmail, loginUser } = require('../controllers/userController');
+const { registerUser, verifyEmail, loginUser, getUserProfile } = require('../controllers/userController');
+const { isLoggedIn } = require('../middleware/auth');
 const upload = require('../middleware/fileUpload');
 
 const userRouter = require('express').Router();
@@ -6,6 +7,7 @@ const userRouter = require('express').Router();
 userRouter.post('/register', upload.single('image'), registerUser);
 userRouter.post('/activate', verifyEmail);
 userRouter.post('/login', loginUser);
+userRouter.get('/profile/:id', isLoggedIn, getUserProfile);
 // userRouter.get('/logout', isLoggedIn, logoutUser);
 // userRouter
 //     .route('/')

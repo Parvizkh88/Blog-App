@@ -146,7 +146,7 @@ const loginUser = async (req, res, next) => {
         // we store the id in the token: {id:user._id}
         const token = jwt.sign({ _id: user._id },
             // secret key
-            String(dev.app.jtwAuthorizationSecretKey), {
+            String(dev.app.jwtAuthorizationSecretKey), {
             expiresIn: '15m'
         });
 
@@ -164,7 +164,7 @@ const loginUser = async (req, res, next) => {
             // cookie must have shorter expiretime than token
             expires: new Date(Date.now() + 1000 * 60 * 10),
             httpOnly: true, // send the jwt token inside http only cookie
-            secure: true,
+            // secure: true,
             // sameSite: 'none'
         })
 
@@ -184,6 +184,43 @@ const loginUser = async (req, res, next) => {
         next(error)
     }
 };
+
+const getUserProfile = async (req, res, next) => {
+    try {
+        //const id = req.params.id; is better than
+        // const id = req.params; because req.params is an object containing
+        // a property for each route parameter, whereas req.params.id
+        //only returns the value of the id parameter.
+        const id = req.params.id;
+        // console.log(typeof id);
+        const user = await User.findById(id);
+        if (!user) throw createError(404, 'user was not found');
+        return successHandler(res, 200, 'user was returned successfully!',
+            { user: user }); //if we find the user then we can send it as a
+        //response:{user: user}
+    } catch (error) {
+        //If the error is indeed a CastError, it means that the id
+        //parameter in the request was not valid and couldn't be
+        //converted to the type required by MongoDB (e.g., ObjectId).
+        //In this case, the catch block generates a new error using
+        //createError from the http-errors library with a status code
+        //of 400 (Bad Request) and a message of 'invalid id'. Then,
+        //it passes this new error to the next middleware function
+        //using next, effectively stopping the execution of the current middleware.
+        //On the other hand, if the error is not a CastError,
+        //it means that it was caused by something else, such as a
+        //server error, database error, or some other issue.In this case,
+        //the catch block simply passes the original error to the next middleware
+        //function without modifying it, allowing it to be handled by the next error
+        //- handling middleware.
+        if (error instanceof mongoose.Error.CastError) {
+            next(createError(400, 'invalid id'));
+            return
+        }
+        next(error);
+    }
+};
+
 module.exports = {
-    registerUser, verifyEmail, loginUser
+    registerUser, verifyEmail, loginUser, getUserProfile
 }
