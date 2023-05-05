@@ -17,3 +17,8 @@ export const activateUser = async (token) => {
     const response = await axios.post(`${baseURL}/api/users/activate`, token)
     return response.data;
 }
+export const loginUser = async (user) => {
+    // How to make a request to backend from frontend 
+    const response = await axios.post(`${baseURL}/api/users/login`, user)
+    return response.data;
+}

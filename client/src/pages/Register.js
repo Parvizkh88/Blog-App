@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { registerUser } from '../services/UserService';

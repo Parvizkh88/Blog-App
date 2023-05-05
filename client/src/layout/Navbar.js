@@ -10,6 +10,7 @@ const Navbar = () => {
             <Link to='/create-blog' className='nav__link'>Create Blog</Link>
             <Link to='/register' className='nav__link'>Register</Link>
             <Link to='/login' className='nav__link'>Login</Link>
+            <Link to='/profile' className='nav__link'>Profile</Link>
         </nav>
     )
 }
